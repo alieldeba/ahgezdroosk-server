@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
+
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
