@@ -1,13 +1,7 @@
 const usersModel = require("../models/usersModel.js");
 
 const getUsers = async (req, res) => {
-  const users = await usersModel.find({
-    _id,
-    firstName,
-    lastName,
-    email,
-    telephone,
-  });
+  const users = await usersModel.find();
 
   res.send(users);
 };
