@@ -1,14 +1,14 @@
-const groupsModel = require("../models/groupsModel.js");
+const Group = require("../models/GroupModel.js");
 
 const getGroups = async (req, res) => {
-  const groups = await groupsModel.find();
+  const groups = await Group.find();
 
   res.send(groups);
 };
 
 const addGroup = async (req, res) => {
   const { name, capacity } = req.body;
-  group = await groupsModel.create({
+  group = await Group.create({
     name: name,
     capacity: capacity,
   });
@@ -20,9 +20,9 @@ const addGroup = async (req, res) => {
 
 const deleteGroup = async (req, res) => {
   const { id } = req.body;
-  await groupsModel.findByIdAndDelete(id);
+  await Group.findByIdAndDelete(id);
 
-  res.send(`Group deleted successfuly`);
+  res.send(`Group deleted successfuly`)
 };
 
 module.exports = { getGroups, addGroup, deleteGroup };
