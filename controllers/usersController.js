@@ -40,6 +40,8 @@ const addUser = async (req, res) => {
       email,
       password,
     });
+    
+    user.save();
 
     res.status(201).json(user);
   } catch (error) {
