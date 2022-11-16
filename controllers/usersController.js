@@ -24,7 +24,7 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.status(200).json(users);
+    res.status(200).json({ user });
   } catch (error) {
     res.status(404).send("There is no users")
   }
@@ -42,7 +42,7 @@ const addUser = async (req, res) => {
     
     user.save();
 
-    res.status(201).json(user);
+    res.status(201).json({user});
   } catch (error) {
     const errors = handleErrors(error);
     res.json({ errors });
