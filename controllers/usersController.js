@@ -24,10 +24,10 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.status(302).send(users);
+    res.status(302).json(users);
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).send({ errors });
+    res.status(404).json({ errors });
   }
 };
 
@@ -46,7 +46,7 @@ const addUser = async (req, res) => {
     res.status(201).json(user);
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).send({ errors });
+    res.status(404).json({ errors });
   }
 };
 
@@ -58,7 +58,7 @@ const deleteUser = async (req, res) => {
     res.send(`User deleted successfuly`);
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).send({ errors });
+    res.status(404).json({ errors });
   }
 };
 
@@ -69,7 +69,7 @@ const deleteAllUsers = async (req, res) => {
     res.send(`All users were deleted successfuly`);
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).send({ errors });
+    res.status(404).json({ errors });
   }
 };
 
