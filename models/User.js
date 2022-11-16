@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 
-const UserModel = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -23,14 +23,14 @@ const UserModel = mongoose.Schema({
   },
   telephone: {
     type: Number,
-    required: [true, "أدخل رقم هاتفك من فضلك"],
+    required: [true, "الرجاء إدخال رقم هاتفك"],
     minlength: [11, "طول رقم الهاتف يجب ان يكون 11 رقم"],
   },
 });
 
 // Fire a function before saving user to db
 // Hashing the user password
-UserModel.pre("save", async function (next) {
+UserSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
