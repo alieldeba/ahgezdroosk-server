@@ -46,7 +46,7 @@ const addUser = async (req, res) => {
     res.status(201).json(user);
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).json({ errors });
+    res.json({ errors });
   }
 };
 
