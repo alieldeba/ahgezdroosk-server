@@ -9,6 +9,12 @@ const UserSchema = mongoose.Schema({
     required: [true, "الرجاء إدخال اسم"],
     maxlength: [10, "الحد الأقصى لطول الاسم هو 10 أحرف"],
   },
+  telephone: {
+    type: Number,
+    required: [true, "الرجاء إدخال رقم هاتفك"],
+    // min: [10, "طول رقم الهاتف يجب ان يكون 11 رقم"],
+    // max: [12, "طول رقم الهاتف يجب ان يكون 11 رقم"],
+  },
   email: {
     type: String,
     required: [true, "الرجاء إدخال البريد الإلكترونى"],
@@ -21,10 +27,9 @@ const UserSchema = mongoose.Schema({
     required: [true, "الرجاء إدخال كلمة المرور"],
     minlength: [6, "الحد الأدنى لطول كلمة المرور هو 6 أحرف"],
   },
-  telephone: {
-    type: Number,
-    required: [true, "الرجاء إدخال رقم هاتفك"],
-    minlength: [11, "طول رقم الهاتف يجب ان يكون 11 رقم"],
+  date: {
+    type: Date,
+    default: new Date(),
   },
 });
 
@@ -36,4 +41,4 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("users", UserModel);
+module.exports = mongoose.model("users", UserSchema);

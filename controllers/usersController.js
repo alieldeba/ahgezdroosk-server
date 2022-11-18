@@ -1,4 +1,7 @@
 const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 // handle errors
 const handleErrors = (err) => {
@@ -20,31 +23,68 @@ const handleErrors = (err) => {
   return errors;
 };
 
+// create json web token
+const threeDays = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.SECRET, {
+    expiresIn: threeDays,
+  });
+};
+
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.status(200).json({ user });
+    res.status(200).json({ users });
   } catch (error) {
-    res.status(404).send("There is no users")
+    res.status(404).send("There is no users");
   }
 };
 
-const addUser = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { name, email, telephone, password } = req.body;
-    user = await User.create({
+    const user = await User.create({
       name,
       telephone,
       email,
       password,
     });
-    
-    user.save();
 
-    res.status(201).json({user});
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: threeDays * 1000 });
+    res.status(201).json({ user: user._id });
   } catch (error) {
     const errors = handleErrors(error);
+    res.json({ errors });
+  }
+};
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.find({ email: email });
+    console.log(user.password, password);
+    if (user) {
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        if (res) {
+          console.log(res);
+        }
+      });
+    } else {
+      res.send("email is not registered");
+    }
+
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: threeDays * 1000 });
+    res.status(200).json({ user: user._id });
+  } catch (err) {
+    console.log(err.message);
+    const errors = handleErrors(err);
     res.json({ errors });
   }
 };
@@ -72,4 +112,4 @@ const deleteAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, addUser, deleteUser, deleteAllUsers };
+module.exports = { getUsers, register, login, deleteUser, deleteAllUsers };

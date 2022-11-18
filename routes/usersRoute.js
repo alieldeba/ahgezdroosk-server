@@ -1,16 +1,19 @@
 // example.com/users
+// example.com/users/register
 const express = require("express");
 
 const {
   getUsers,
-  addUser,
+  register,
+  login,
   deleteUser,
 } = require("../controllers/usersController.js");
 
 const router = express.Router();
 
 router.get("/", getUsers);
-router.post("/", addUser);
+router.post("/register", register);
+router.post("/login", login);
 router.delete("/", deleteUser);
 
 // * get a specific user (get)
