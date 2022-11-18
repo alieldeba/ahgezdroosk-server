@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
 require("dotenv").config();
 
-const usersRoute = require("./routes/usersRoute.js");
+const auth = require("./routes/auth.js");
 const groupsRoute = require("./routes/groupsRoute.js");
 
 const app = express();
@@ -22,7 +22,7 @@ app.use(cookieParser())
 
 app.use(cors());
 
-app.use("/users", usersRoute);
+app.use("/users", auth);
 app.use("/groups", groupsRoute);
 
 // Database

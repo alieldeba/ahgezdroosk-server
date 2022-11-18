@@ -7,7 +7,7 @@ const {
   register,
   login,
   deleteUser,
-} = require("../controllers/usersController.js");
+} = require("../controllers/authController.js");
 
 const router = express.Router();
 
