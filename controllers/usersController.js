@@ -64,26 +64,29 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.find({ email: email });
-    console.log(user.password, password);
-    if (user) {
-      bcrypt.compare(password, user.password, (err, res) => {
-        if (err) {
-          console.log(err);
-        }
-        if (res) {
-          console.log(res);
-        }
-      });
-    } else {
-      res.send("email is not registered");
-    }
+    const user = await User.findOne({ email: email });
 
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: threeDays * 1000 });
-    res.status(200).json({ user: user._id });
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.status(400).json({
+          err: "password is incorrect",
+        });
+      } else {
+        const token = createToken(user._id);
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          maxAge: threeDays * 1000,
+        });
+        res.status(200).json({ user: user._id });
+      }
+    } else {
+      return res.status(404).json({
+        err: "this email is not registered",
+      });
+    }
   } catch (err) {
-    console.log(err.message);
     const errors = handleErrors(err);
     res.json({ errors });
   }

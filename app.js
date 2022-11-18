@@ -12,8 +12,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
@@ -21,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser())
+
+app.use(cors());
 
 app.use("/users", usersRoute);
 app.use("/groups", groupsRoute);
