@@ -9,8 +9,8 @@ class Grade extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function profiles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Profile::class);
     }
 }

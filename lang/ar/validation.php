@@ -173,6 +173,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'الاسم',
+        'email' => 'البريد الإلكتروني',
+        'password' => 'كلمة المرور',
+        'phone' => 'رقم الهاتف',
+        'grade_id' => 'الصف',
+    ],
 
 ];
