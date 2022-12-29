@@ -173,6 +173,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'grade_id' => 'Grade',
+    ],
 
 ];

@@ -18,6 +18,14 @@ class Profile extends Model
         'grade_id'
     ];
 
+    protected $casts = [
+        'grade_id' => 'int'
+    ];
+
+    protected $hidden = [
+        'user_id',
+    ];
+
     public function grade(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Grade::class);
